@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { isString, isEmpty } from 'lodash';
+import { isString, isEmpty, take, drop } from 'lodash';
 import { Row, Col } from 'reactstrap';
 
 import { twitterService } from './libs';
 
 import Search from './Search';
 import Loader from './Loader';
+import Control from './Control';
 import Timeline from './Timeline';
 import Grid from './Grid';
 
@@ -19,6 +20,8 @@ class App extends Component {
     this.state = {
       searchQuery: '#starladder',
       tweets: [],
+      tweetsPerPage: 10,
+      activePageNumber: 0,
       isLoading: false
     };
 
@@ -39,7 +42,10 @@ class App extends Component {
     this.setState({ isLoading: true });
     twitterService.search(searchQuery)
       .then(tweets => {
-        this.setState({ tweets });
+        this.setState({
+          tweets,
+          activePageNumber: 0
+        });
       })
       .finally(() => {
         this.setState({ isLoading: false });
@@ -47,7 +53,8 @@ class App extends Component {
   }
 
   render() {
-    const { searchQuery, tweets, isLoading } = this.state;
+    const { searchQuery, tweets, tweetsPerPage, activePageNumber, isLoading } = this.state;
+    const displayedTweets = take(drop(tweets, activePageNumber * tweetsPerPage), tweetsPerPage);
 
     return (
       <div className={styles.app}>
@@ -71,20 +78,28 @@ class App extends Component {
                   </div>
               }
             </div>
+          </div>
 
-            {
-              tweets && !!tweets.length &&
+          {
+            tweets && !!tweets.length &&
+              <div className={styles.contentBody}>
+                <Control tweets={tweets}
+                         tweetsPerPage={tweetsPerPage}
+                         activePageNumber={activePageNumber}
+                         onClick={pageNumber => this.setState({ activePageNumber: pageNumber })}
+                />
+
                 <Row noGutters={true}>
-                  <Col xs={5}>
-                    <Timeline tweets={tweets} />
+                  <Col xs={6}>
+                    <Timeline tweets={displayedTweets} />
                   </Col>
 
-                  <Col xs={7}>
-                    <Grid tweets={tweets} />
+                  <Col xs={6}>
+                    <Grid tweets={displayedTweets} />
                   </Col>
                 </Row>
-            }
-          </div>
+              </div>
+          }
         </div>
       </div>
     );
