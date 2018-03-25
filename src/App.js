@@ -6,6 +6,7 @@ import { twitterService } from './libs';
 
 import Search from './Search';
 import Loader from './Loader';
+import NothingWasFound from './NothingWasFound';
 import Control from './Control';
 import Timeline from './Timeline';
 import Grid from './Grid';
@@ -81,7 +82,8 @@ class App extends Component {
           </div>
 
           {
-            tweets && !!tweets.length &&
+            !tweets || !tweets.length ?
+              !isLoading && <NothingWasFound /> :
               <div className={styles.contentBody}>
                 <Control tweets={tweets}
                          tweetsPerPage={tweetsPerPage}
