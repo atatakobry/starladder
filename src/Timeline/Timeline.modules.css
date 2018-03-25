@@ -1,0 +1,8 @@
+.component {
+  background: #fff;
+  color: #000;
+}
+.component > div {
+  position: relative;
+  border-bottom: 1px solid #e6ecf0;
+}
