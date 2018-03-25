@@ -9,14 +9,20 @@ var client = new Twitter({
   access_token_secret: 'dIAuWtxVqIuolvjDg8QAreDrgawEDgJbRMKVmhIO2uVYm'
 });
 
-router.get('/', function(req, res, next) {
-  client.get('search/tweets', { q: 'Elon Musk' }, function(error, tweets, response) {
-    if (!error) {
-      res.json(tweets);
-    } else {
-      res.status(500).json({ error: error });
-    }
-  });
+router.get('/tweets', function(req, res, next) {
+  var q = req.query && req.query.q;
+
+  if (!q) {
+    res.json({ statuses: [] });
+  } else {
+    client.get('search/tweets', { q: q }, function(error, tweets, response) {
+      if (!error) {
+        res.json(tweets);
+      } else {
+        res.status(500).json({ error: error });
+      }
+    });
+  }
 });
 
 module.exports = router;
