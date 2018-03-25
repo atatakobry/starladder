@@ -1,0 +1,42 @@
+.component {
+  float: left;
+  position: relative;
+  height: 0;
+  width: 33.33%;
+  padding-bottom: 33.33%;
+  background-size: cover;
+  background-position: center;
+}
+.component:nth-of-type(3n-2) {
+  width: 66.67%;
+  padding-bottom: 66.67%;
+}
+
+.content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.screenName {
+  font-size: 14px;
+  color: #d0d0d0;
+}
+
+.text {
+  font-size: 13px;
+  line-height: 20px;
+  max-width: 100%;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+}

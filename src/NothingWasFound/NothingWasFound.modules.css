@@ -1,0 +1,14 @@
+.component {
+  width: 298px;
+  height: 255px;
+  margin: 120px auto 0;
+  padding-top: 60px;
+}
+
+.sadCat {
+  display: block;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+  border-radius: 5px;
+}
