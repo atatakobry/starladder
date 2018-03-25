@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from 'date-fns';
+import { distanceInWordsToNow } from 'date-fns';
 
 import styles from './TimelineTweet.modules.css';
 
@@ -25,7 +25,7 @@ function TimelineTweet({ tweet }) {
           </span>
 
           <span className={styles.createdAt}>
-            {format(tweet.created_at, 'HH:mm:ss DD.MM.YYYY')}
+            {distanceInWordsToNow(tweet.created_at)}
           </span>
         </div>
 
